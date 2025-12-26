@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menú | Informe Técnico gpVision™</title>
+
+  <style>
+    :root{
+      --bg:#0b1624;
+      --panel:#0f223a;
+      --card: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.14);
+      --text:#e6edf5;
+      --muted: rgba(230,237,245,.75);
+      --accent:#4da3ff;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --r:16px;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(900px 500px at 15% 10%, rgba(77,163,255,.18), transparent 60%),
+        radial-gradient(700px 450px at 90% 85%, rgba(77,163,255,.10), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* Topbar */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      background: rgba(15,34,58,.92);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(10px);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 160px;
+    }
+    .badge{
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display:grid;
+      place-items:center;
+      font-weight: 900;
+      background: linear-gradient(135deg, rgba(77,163,255,.95), rgba(77,163,255,.35));
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 22px rgba(77,163,255,.20);
+      color: #05121c;
+    }
+    .brand h1{
+      margin:0;
+      font-size: 14px;
+      line-height: 1.1;
+      letter-spacing: .2px;
+    }
+    .brand p{
+      margin:2px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Tabs */
+    .tabs{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      flex: 1;
+    }
+    .tab{
+      text-decoration:none;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition: .15s ease;
+      white-space: nowrap;
+    }
+    .tab:hover{
+      color: var(--text);
+      border-color: rgba(77,163,255,.35);
+      background: rgba(0,0,0,.18);
+    }
+    .tab.active{
+      color: var(--text);
+      border-color: rgba(77,163,255,.55);
+      background: rgba(77,163,255,.10);
+    }
+
+    .actions{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 140px;
+      justify-content: flex-end;
+    }
+    .btn{
+      cursor:pointer;
+      border-radius: 12px;
+      padding: 9px 12px;
+      font-size: 13px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      transition: .15s ease;
+    }
+    .btn:hover{
+      border-color: rgba(77,163,255,.55);
+      transform: translateY(-1px);
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(77,163,255,.95), rgba(77,163,255,.55));
+      color: #07121a;
+      border-color: rgba(255,255,255,.18);
+      font-weight: 800;
+    }
+
+    /* Main */
+    main{
+      width: min(980px, 100%);
+      margin: 26px auto;
+      padding: 0 18px 18px;
+      flex: 1;
+    }
+    .hero{
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--r);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .hero h2{
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: .2px;
+    }
+    .hero p{
+      margin: 0 0 10px;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+    .chips{
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .chip{
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      padding: 7px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .grid{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .card{
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--r);
+      padding: 14px;
+      box-shadow: var(--shadow);
+      text-decoration:none;
+      color: inherit;
+      transition: .15s ease;
+      display:block;
+    }
+    .card:hover{
+      border-color: rgba(77,163,255,.55);
+      transform: translateY(-1px);
+    }
+    .card .k{
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .card .v{
+      margin-top: 6px;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: .2px;
+    }
+    .card .d{
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    footer{
+      text-align:center;
+      padding: 16px 18px 22px;
+      color: rgba(230,237,245,.55);
+      font-size: 12px;
+    }
+
+    /* Responsive */
+    @media (max-width: 720px){
+      .brand{min-width:auto}
+      .actions{min-width:auto}
+      .hero h2{font-size: 20px}
+    }
+
+    /* ===== HAMBURGER + MOBILE NAV ===== */
+.menuBtn{
+  display:none;
+  cursor:pointer;
+  border-radius: 12px;
+  padding: 9px 12px;
+  font-size: 18px;
+  line-height: 1;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(0,0,0,.22);
+  color: var(--text);
+  transition: .15s ease;
+}
+.menuBtn:hover{
+  border-color: rgba(77,163,255,.55);
+  transform: translateY(-1px);
+}
+
+.mobileNav{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+  display:none;
+  z-index: 2000;
+}
+.mobileNav.open{ display:block; }
+
+.mobileNavPanel{
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  left: 12px;
+  max-width: 520px;
+  margin-left: auto;
+  background: rgba(15,34,58,.96);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 18px;
+  box-shadow: 0 18px 60px rgba(0,0,0,.55);
+  overflow:hidden;
+}
+
+.mobileNavHead{
+  padding: 14px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+
+.mobileTitle{
+  font-weight: 900;
+  font-size: 14px;
+}
+.mobileSub{
+  margin-top:2px;
+  font-size: 12px;
+  color: rgba(230,237,245,.70);
+}
+
+.mobileNavLinks{
+  padding: 10px;
+  display:grid;
+  gap: 8px;
+}
+
+.mLink{
+  text-decoration:none;
+  color: var(--text);
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.18);
+  font-size: 14px;
+}
+.mLink:hover{
+  border-color: rgba(77,163,255,.55);
+  background: rgba(77,163,255,.10);
+}
+
+/* Responsive behavior */
+@media (max-width: 860px){
+  .tabs{ display:none; }
+  .menuBtn{ display:inline-flex; align-items:center; justify-content:center; }
+}
+
+  </style>
+</head>
+
+<body>
+
+  <script>
+    // Protección simple: si no hay sesión, vuelve a login
+    if (sessionStorage.getItem("auth") !== "ok") {
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="badge">gp</div>
+      <div>
+        <h1>Informe gpVision™</h1>
+        <p>Menú · navegación por módulos</p>
+      </div>
+    </div>
+
+   <!-- Botón hamburguesa (solo móvil) -->
+<button class="menuBtn" id="menuBtn" type="button" aria-label="Abrir menú" aria-expanded="false">
+  ☰
+</button>
+
+<!-- Tabs normales (desktop) -->
+<nav class="tabs" aria-label="Navegación principal">
+  <a class="tab active" href="menu.html">Menú</a>
+  <a class="tab" href="sistema-gpvision.html">GpVision</a>
+  <a class="tab" href="simple-gui.html">Simple GUI</a>
+  <a class="tab" href="software.html">Software general</a>
+  <a class="tab" href="hardware.html">Hardware general</a>
+  <a class="tab" href="mecanica.html">Mecánica</a>
+  <a class="tab" href="correccion-errores.html">Corrección de errores</a>
+</nav>
+
+<!-- Menú móvil (overlay) -->
+<div class="mobileNav" id="mobileNav" aria-hidden="true">
+  <div class="mobileNavPanel" role="dialog" aria-label="Menú de navegación">
+    <div class="mobileNavHead">
+      <div>
+        <div class="mobileTitle">Informe gpVision™</div>
+        <div class="mobileSub">Navegación</div>
+      </div>
+      <button class="btn" id="closeNavBtn" type="button">✕</button>
+    </div>
+
+    <div class="mobileNavLinks">
+      <a class="mLink" href="menu.html">Menú</a>
+      <a class="mLink" href="sistema-gpvision.html">GpVision</a>
+      <a class="mLink" href="simple-gui.html">Simple GUI</a>
+      <a class="mLink" href="software.html">Software general</a>
+      <a class="mLink" href="hardware.html">Hardware general</a>
+      <a class="mLink" href="mecanica.html">Mecánica</a>
+      <a class="mLink" href="correccion-errores.html">Corrección de errores</a>
+    </div>
+  </div>
+</div>
+
+
+    <div class="actions">
+      <button class="btn" id="logoutBtn" type="button">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>Plataforma de Clasificación GP Graders gpVision™</h2>
+      <p>
+        Este sitio reúne el informe técnico de la plataforma <strong>gpVision™</strong>, orientado a documentar
+        arquitectura, operación, configuración de software, componentes de hardware, sistema mecánico y corrección
+        de errores asociados a la clasificación por visión artificial.
+      </p>
+      <p>
+        Utiliza las pestañas superiores para acceder a cada interfaz del informe. El objetivo es mantener secciones
+        claras y separadas para facilitar lectura, auditoría técnica y análisis por herramientas basadas en IA.
+      </p>
+
+      <div class="chips">
+        <span class="chip">MultiView™ (Color + NIR)</span>
+        <span class="chip">Cliente-Servidor</span>
+        <span class="chip">Vision Units · RTUnits</span>
+        <span class="chip">Clasificación por clases y defectos</span>
+        <span class="chip">Diagnóstico y logs</span>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="Accesos rápidos">
+      <a class="card" href="sistema-gpvision.html">
+        <div class="k">Sección</div>
+        <div class="v">GpVision</div>
+        <div class="d">Visión general del sistema, arquitectura, flujo y componentes principales.</div>
+      </a>
+
+      <a class="card" href="simple-gui.html">
+        <div class="k">Sección</div>
+        <div class="v">Simple GUI</div>
+        <div class="d">Pantallas de operación diaria: clases, defectos, salidas y monitoreo.</div>
+      </a>
+
+      <a class="card" href="software.html">
+        <div class="k">Sección</div>
+        <div class="v">Software general</div>
+        <div class="d">Configuraciones, estadísticas, espectros, logs, errores y herramientas de soporte.</div>
+      </a>
+
+      <a class="card" href="hardware.html">
+        <div class="k">Sección</div>
+        <div class="v">Hardware general</div>
+        <div class="d">Rack, PC industrial, red, RTUnits, tableros y componentes asociados.</div>
+      </a>
+
+      <a class="card" href="mecanica.html">
+        <div class="k">Sección</div>
+        <div class="v">Mecánica</div>
+        <div class="d">Transporte por rollers, guías, motor/reductor y elementos de estabilización.</div>
+      </a>
+
+      <a class="card" href="correccion-errores.html">
+        <div class="k">Sección</div>
+        <div class="v">Corrección de errores</div>
+        <div class="d">Fallas típicas (segmentación, sincronización, comunicación) y acciones de corrección.</div>
+      </a>
+    </section>
+  </main>
+
+  <footer>
+    GP Graders · gpVision™ · Documentación técnica
+  </footer>
+
+  <script>
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      sessionStorage.removeItem("auth");
+      window.location.href = "login.html";
+    });
+
+  (function(){
+    const btn = document.getElementById("menuBtn");
+    const overlay = document.getElementById("mobileNav");
+    const closeBtn = document.getElementById("closeNavBtn");
+
+    if(!btn || !overlay || !closeBtn) return;
+
+    function openNav(){
+      overlay.classList.add("open");
+      overlay.setAttribute("aria-hidden","false");
+      btn.setAttribute("aria-expanded","true");
+      document.body.style.overflow = "hidden";
+    }
+    function closeNav(){
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden","true");
+      btn.setAttribute("aria-expanded","false");
+      document.body.style.overflow = "";
+    }
+
+    btn.addEventListener("click", openNav);
+    closeBtn.addEventListener("click", closeNav);
+
+    // cerrar si tocas el fondo oscuro
+    overlay.addEventListener("click", (e)=>{
+      if(e.target === overlay) closeNav();
+    });
+
+    // ESC cierra
+    document.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape" && overlay.classList.contains("open")) closeNav();
+    });
+
+    // al tocar un link, cerrar
+    overlay.querySelectorAll("a").forEach(a=>{
+      a.addEventListener("click", closeNav);
+    });
+  })();
+
+  </script>
+</body>
+</html>
